@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自媒體起步定位助手</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="sticky-header">
+        <div class="header">
+            <h1>🚀 自媒體起步定位助手</h1>
+            <p>教練 / 直銷 / 服務業 / 保健品 ｜ 內容策略與影片定位指南</p>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- 測驗卡片 -->
+        <div id="quiz-card" class="card">
+            <div class="quiz-progress-bar">
+                <span id="step-tag" class="pill-tag pill-blue">步驟 1 / 5</span>
+                <span id="progress-text" class="progress-text">20%</span>
+            </div>
+
+            <h2 id="question-title" class="day-title">載入中...</h2>
+
+            <div id="options-container" class="options-group">
+                <!-- 選項由 JS 動態渲染 -->
+            </div>
+        </div>
+
+        <!-- 結果卡片 (預設隱藏) -->
+        <div id="result-card" class="card hidden">
+            <span id="result-badge" class="pill-tag pill-blue">🎯 你的定位方向</span>
+            <h2 id="result-type" class="day-title" style="margin-top: 6px;">分析中...</h2>
+
+            <!-- 粉絲數策略提醒 -->
+            <div id="follower-notice" class="notice-box hidden">
+                <strong>💡 粉絲數起步建議：</strong>
+                <span id="follower-notice-text"></span>
+            </div>
+
+            <div class="section">
+                <div class="section-title">💡 核心經營策略</div>
+                <div id="result-desc" class="section-content"></div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="section">
+                <span class="pill-tag pill-soft-blue">🎬 推薦拍的影片方向 (黃金腳本)</span>
+                <div id="result-ideas" class="section-content">
+                    <!-- 動態注入影片提案 -->
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="section">
+                <span class="pill-tag pill-green">🚀 第一步行動方案</span>
+                <div id="result-action" class="section-content" style="font-weight: 600; color: var(--pill-green-text);"></div>
+            </div>
+
+            <button class="action-btn" onclick="restartQuiz()">🔄 重新測驗</button>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

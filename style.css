@@ -1,0 +1,180 @@
+:root {
+    --primary: #2563eb;
+    --bg: #f4f6f9;
+    --card-bg: #ffffff;
+    --text-main: #2b3a4a;
+    --text-sub: #667085;
+    
+    /* 膠囊標籤配色 */
+    --pill-blue-bg: #e8f1ff;
+    --pill-blue-text: #2563eb;
+    
+    --pill-soft-blue-bg: #e0f2fe;
+    --pill-soft-blue-text: #0284c7;
+
+    --pill-green-bg: #e6f4ea;
+    --pill-green-text: #137333;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg);
+    color: var(--text-main);
+    -webkit-font-smoothing: antialiased;
+}
+
+.sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.header {
+    background-color: #ffffff;
+    color: var(--text-main);
+    padding: 18px 15px;
+    text-align: center;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 1.3rem;
+    color: #0f172a;
+}
+
+.header p {
+    margin: 6px 0 0 0;
+    font-size: 0.8rem;
+    color: var(--text-sub);
+}
+
+.container {
+    padding: 16px;
+    max-width: 550px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    border: 1px solid #f0f0f0;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* 進度列與標籤 */
+.quiz-progress-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.progress-text {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-sub);
+}
+
+.pill-tag {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 0.88rem;
+    font-weight: 700;
+}
+
+.pill-blue { background-color: var(--pill-blue-bg); color: var(--pill-blue-text); }
+.pill-soft-blue { background-color: var(--pill-soft-blue-bg); color: var(--pill-soft-blue-text); }
+.pill-green { background-color: var(--pill-green-bg); color: var(--pill-green-text); }
+
+.day-title {
+    margin: 0 0 16px 0;
+    font-size: 1.25rem;
+    color: #0f172a;
+    font-weight: 800;
+    line-height: 1.4;
+}
+
+/* 選項按鈕 */
+.options-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.option-btn {
+    width: 100%;
+    padding: 14px 16px;
+    background-color: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    text-align: left;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #334155;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.option-btn:hover {
+    border-color: var(--primary);
+    background-color: #f8fafc;
+    color: var(--primary);
+}
+
+.option-btn::after {
+    content: "➔";
+    color: #cbd5e1;
+}
+
+.divider {
+    height: 1px;
+    background-color: #f1f5f9;
+    margin: 20px 0;
+}
+
+.section { margin: 12px 0; }
+.section-title { font-size: 0.95rem; font-weight: 700; color: #334155; margin-bottom: 8px; }
+.section-content { font-size: 0.95rem; color: #475569; line-height: 1.6; }
+
+/* 提示框 */
+.notice-box {
+    background-color: #fffbeb;
+    border: 1px solid #fef3c7;
+    color: #92400e;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    margin: 16px 0;
+    line-height: 1.5;
+}
+
+.action-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: #0f172a;
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background 0.2s;
+}
+
+.action-btn:hover { background-color: #1e293b; }
