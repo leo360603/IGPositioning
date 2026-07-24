@@ -191,57 +191,63 @@
 
     <script>
         function analyzeAccount() {
-            const handle = document.getElementById('handle').value || '@your_account';
-            const niche = document.getElementById('niche').value || '個人品牌';
-            const followers = document.getElementById('followers').value;
+    const handle = document.getElementById('handle').value || '@your_account';
+    const niche = document.getElementById('niche').value || '個人品牌';
+    const followers = document.getElementById('followers').value;
 
-            const cBio = document.getElementById('check_bio').checked;
-            const cLink = document.getElementById('check_link').checked;
-            const cHighlight = document.getElementById('check_highlight').checked;
-            const cReels = document.getElementById('check_reels').checked;
+    const cBio = document.getElementById('check_bio').checked;
+    const cLink = document.getElementById('check_link').checked;
+    const cHighlight = document.getElementById('check_highlight').checked;
+    const cReels = document.getElementById('check_reels').checked;
 
-            // 計算分數
-            let score = 40; // 基礎分
-            if (cBio) score += 15;
-            if (cLink) score += 15;
-            if (cHighlight) score += 15;
-            if (cReels) score += 15;
+    // 計算分數
+    let score = 40; // 基礎分
+    if (cBio) score += 15;
+    if (cLink) score += 15;
+    if (cHighlight) score += 15;
+    if (cReels) score += 15;
 
-            // 建議產出
-            let advice = [];
-            if (!cBio) advice.push("<b>優化 Bio：</b>個人簡介第一行請明確寫出『我能幫你解決什麼問題』，不要只寫星座或幽默短句。");
-            if (!cLink) advice.push("<b>建立導流點：</b>個人檔案缺乏外部連結，會浪費流量！請設定 Line 官方帳號或預約表單。");
-            if (!cHighlight) advice.push("<b>補強精選限動：</b>建議建立『關於我』與『學員/客戶見證』精選，新粉進來才能快速建立信任。");
-            if (!cReels) advice.push("<b>提高短影音頻率：</b>演算法目前偏好 Reels，建議每週穩定發佈 2-3 支【破解迷思型】短影片。");
+    // 建議產出
+    let advice = [];
+    if (!cBio) advice.push("<b>優化 Bio：</b>個人簡介第一行請明確寫出『我能幫你解決什麼問題』，不要只寫星座或幽默短句。");
+    if (!cLink) advice.push("<b>建立導流點：</b>個人檔案缺乏外部連結，會浪費流量！請設定 Line 官方帳號或預約表單。");
+    if (!cHighlight) advice.push("<b>補強精選限動：</b>建議建立『關於我』與『學員/客戶見證』精選，新粉進來才能快速建立信任。");
+    if (!cReels) advice.push("<b>提高短影音頻率：</b>演算法目前偏好 Reels，建議每週穩定發佈 2-3 支【破解迷思型】短影片。");
 
-            if (advice.length === 0) {
-                advice.push("<b>表現極佳！</b>帳號基礎建置完整，接下來請專注於優化影片前 3 秒的 Hook（黃金開頭）以提昇轉換率。");
-            }
+    if (advice.length === 0) {
+        advice.push("<b>表現極佳！</b>帳號基礎建置完整，接下來請專注於優化影片前 3 秒的 Hook（黃金開頭）以提昇轉換率。");
+    }
 
-            document.getElementById('result-handle').innerText = `帳號：${handle}（${niche}）`;
-            document.getElementById('score-val').innerText = `${score} / 100`;
-            
-            let scoreComment = "";
-            if (score < 60) scoreComment = "⚠️ 基礎建置尚未完整，流量進來容易流失";
-            else if (score < 85) scoreComment = "📈 基礎良好，調整內容結構即可快速變現";
-            else scoreComment = "🔥 帳號結構相當健康，適合加大投流或高頻發片";
+    document.getElementById('result-handle').innerText = `帳號：${handle}（${niche}）`;
+    document.getElementById('score-val').innerText = `${score} / 100`;
+    
+    let scoreComment = "";
+    if (score < 60) scoreComment = "⚠️ 基礎建置尚未完整，流量進來容易流失";
+    else if (score < 85) scoreComment = "📈 基礎良好，調整內容結構即可快速變現";
+    else scoreComment = "🔥 帳號結構相當健康，適合加大投流或高頻發片";
 
-            document.getElementById('score-text').innerText = scoreComment;
+    document.getElementById('score-text').innerText = scoreComment;
 
-            const adviceUl = document.getElementById('advice-list');
-            adviceUl.innerHTML = '';
-            advice.forEach(item => {
-                const li = document.createElement('li');
-                li.innerHTML = item;
-                adviceUl.appendChild(li);
-            });
+    const adviceUl = document.getElementById('advice-list');
+    adviceUl.innerHTML = '';
+    advice.forEach(item => {
+        const li = document.createElement('li');
+        li.innerHTML = item;
+        adviceUl.appendChild(li);
+    });
 
-            // Prompt 產生
-            const promptText = `你是一位 IG 帳號營運與短影音內容行銷專家。請幫我對 IG 帳號【${handle}】進行深度內容規劃。
+    // 修正後的粉絲人數文字判斷
+    let followerText = "";
+    if (followers === 'low') followerText = "低於 1,000 人（起步期）";
+    else if (followers === 'mid') followerText = "1,000 - 5,000 人（信任累積期）";
+    else if (followers === 'high') followerText = "5,000 人以上（高效率變現期）";
+
+    // Prompt 產生
+    const promptText = `你是一位 IG 帳號營運與短影音內容行銷專家。請幫我對 IG 帳號【${handle}】進行深度內容規劃。
 
 【帳號基本背景】
 - 賽道/身份：${niche}
-- 目前粉絲規模：${followers === 'low' ? '低於 1,000 人（起步期）' : '1,000-5,000人'}
+- 目前粉絲規模：${followerText}
 - 目前健檢評分：${score}分
 - 待優化項目：${advice.map(a => a.replace(/<[^>]+>/g, '')).join('; ')}
 
@@ -249,13 +255,12 @@
 1. 一段適合修改到 IG 個人檔案（Bio）的 3 行黃金介紹文案（含明確 CTA）。
 2. 5 支專為【${niche}】設計的 30 秒 Reels 腳本（需包含 Hook 開頭、Value 內容與 CTA 結尾）。`;
 
-            document.getElementById('prompt-output').innerText = promptText;
+    document.getElementById('prompt-output').innerText = promptText;
 
-            document.getElementById('form-card').classList.add('hidden');
-            document.getElementById('result-card').classList.remove('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
+    document.getElementById('form-card').classList.add('hidden');
+    document.getElementById('result-card').classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
         function copyPrompt() {
             const promptText = document.getElementById('prompt-output').innerText;
             navigator.clipboard.writeText(promptText).then(() => {
