@@ -3,22 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>自媒體商業定位與腳本深度診斷系統</title>
+    <title>IG 帳號起步健檢與定位助手</title>
     <style>
         :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
+            --primary: #e1306c; /* IG 經典粉紅 */
+            --primary-dark: #c13584;
             --bg: #f8fafc;
             --card-bg: #ffffff;
             --text-main: #0f172a;
             --text-sub: #475569;
-            
-            --pill-blue-bg: #eff6ff;
-            --pill-blue-text: #1d4ed8;
-            
-            --pill-amber-bg: #fffbeb;
-            --pill-amber-text: #b45309;
-
+            --pill-pink-bg: #fce7f3;
+            --pill-pink-text: #be185d;
             --pill-green-bg: #f0fdf4;
             --pill-green-text: #15803d;
         }
@@ -30,44 +25,19 @@
             background-color: var(--bg);
             color: var(--text-main);
             line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        .sticky-header {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background-color: #ffffff;
-            border-bottom: 1px solid #e2e8f0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
         }
 
         .header {
-            padding: 16px;
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .header h1 {
-            margin: 0;
-            font-size: 1.25rem;
-            color: var(--text-main);
-            font-weight: 800;
-        }
-
-        .header p {
-            margin: 4px 0 0 0;
-            font-size: 0.825rem;
-            color: var(--text-sub);
-        }
-
-        .container {
+            background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+            color: white;
             padding: 20px 16px;
-            max-width: 600px;
-            margin: 0 auto;
-            box-sizing: border-box;
+            text-align: center;
         }
+
+        .header h1 { margin: 0; font-size: 1.3rem; font-weight: 800; }
+        .header p { margin: 6px 0 0 0; font-size: 0.825rem; opacity: 0.9; }
+
+        .container { padding: 20px 16px; max-width: 550px; margin: 0 auto; }
 
         .card {
             background: var(--card-bg);
@@ -80,13 +50,6 @@
 
         .hidden { display: none !important; }
 
-        .progress-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
         .pill-tag {
             display: inline-block;
             padding: 6px 14px;
@@ -94,425 +57,215 @@
             font-size: 0.825rem;
             font-weight: 700;
         }
-
-        .pill-blue { background-color: var(--pill-blue-bg); color: var(--pill-blue-text); }
-        .pill-amber { background-color: var(--pill-amber-bg); color: var(--pill-amber-text); }
+        .pill-pink { background-color: var(--pill-pink-bg); color: var(--pill-pink-text); }
         .pill-green { background-color: var(--pill-green-bg); color: var(--pill-green-text); }
 
-        .day-title {
-            margin: 0 0 16px 0;
-            font-size: 1.2rem;
-            color: var(--text-main);
-            font-weight: 800;
-            line-height: 1.4;
-        }
-
-        .options-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .option-btn {
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 0.875rem; font-weight: 700; margin-bottom: 6px; color: #1e293b; }
+        .form-group input, .form-group select {
             width: 100%;
-            padding: 14px 16px;
-            background-color: #ffffff;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 12px;
-            text-align: left;
-            font-size: 0.925rem;
-            font-weight: 600;
-            color: #334155;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 12px;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 0.9rem;
             box-sizing: border-box;
         }
 
-        .option-btn:hover {
-            border-color: var(--primary);
-            background-color: #f8fafc;
-            color: var(--primary);
-        }
+        .checkbox-group { display: flex; flex-direction: column; gap: 8px; margin-top: 6px; }
+        .checkbox-label { font-size: 0.85rem; color: #334155; font-weight: normal; display: flex; align-items: center; gap: 8px; cursor: pointer; }
 
-        .option-btn::after {
-            content: "➔";
-            color: #cbd5e1;
-            font-size: 0.9rem;
-        }
-
-        .divider {
-            height: 1px;
-            background-color: #f1f5f9;
-            margin: 20px 0;
-        }
-
-        .section { margin: 16px 0; }
-        .section-title { font-size: 0.95rem; font-weight: 700; color: #1e293b; margin-bottom: 8px; }
-        .section-content { font-size: 0.925rem; color: #475569; line-height: 1.6; }
-
-        .notice-box {
-            background-color: #fffbeb;
-            border: 1px solid #fef3c7;
-            color: #92400e;
-            padding: 14px 16px;
-            border-radius: 12px;
-            font-size: 0.875rem;
+        .score-box {
+            text-align: center;
+            padding: 16px;
+            background: #faf5ff;
+            border-radius: 16px;
+            border: 1px solid #f3e8ff;
             margin: 16px 0;
-            line-height: 1.5;
         }
 
-        .strategy-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 10px;
+        .score-number { font-size: 2.5rem; font-weight: 900; color: #7e22ce; }
+
+        .prompt-box {
+            background-color: #0f172a;
+            color: #f8fafc;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 0.825rem;
+            white-space: pre-wrap;
+            word-break: break-all;
+            margin: 12px 0;
+            max-height: 180px;
+            overflow-y: auto;
+            font-family: monospace;
         }
 
-        .strategy-item {
-            background-color: #f8fafc;
-            padding: 12px;
-            border-radius: 10px;
-            border: 1px solid #e2e8f0;
-            font-size: 0.85rem;
-        }
-
-        .strategy-item strong {
-            display: block;
-            color: #0f172a;
-            margin-bottom: 4px;
-        }
-
-        .script-card {
-            background-color: #f8fafc;
-            border-left: 4px solid var(--primary);
-            padding: 14px;
-            border-radius: 0 12px 12px 0;
-            margin-bottom: 12px;
-        }
-
-        .script-card strong {
-            color: #1e293b;
-            font-size: 0.9rem;
-        }
-
-        .script-card p {
-            margin: 6px 0 0 0;
-            font-size: 0.875rem;
-            color: #475569;
-        }
-
-        .action-btn {
+        .btn {
             width: 100%;
             padding: 14px;
-            background-color: #0f172a;
-            color: #ffffff;
+            background-color: var(--primary);
+            color: white;
             border: none;
             border-radius: 12px;
             font-size: 0.95rem;
             font-weight: 700;
             cursor: pointer;
-            margin-top: 20px;
-            transition: background 0.2s;
+            transition: 0.2s;
         }
-
-        .action-btn:hover { background-color: #1e293b; }
+        .btn:hover { background-color: var(--primary-dark); }
+        .btn-secondary { background-color: #0f172a; margin-top: 10px; }
     </style>
 </head>
 <body>
 
-    <div class="sticky-header">
-        <div class="header">
-            <h1>📊 自媒體起步定位與策略診斷</h1>
-            <p>教練服務 / 保健品直銷 / 實體門市 / 個人 IP 精準定位</p>
-        </div>
+    <div class="header">
+        <h1>📸 IG 帳號商業起步健檢助手</h1>
+        <p>輸入 IG 帳號與現況 ➔ 取得健康度評分與定位診斷</p>
     </div>
 
     <div class="container">
 
-        <!-- 測驗進行卡片 -->
-        <div id="quiz-card" class="card">
-            <div class="progress-header">
-                <span id="step-tag" class="pill-tag pill-blue">步驟 1 / 6</span>
-                <span id="progress-text" style="font-size: 0.825rem; font-weight: 700; color: #64748b;">16%</span>
+        <!-- 健檢輸入表單 -->
+        <div id="form-card" class="card">
+            <span class="pill-tag pill-pink" style="margin-bottom: 12px;">🔍 帳號資料檢測</span>
+
+            <div class="form-group">
+                <label>1. 你的 IG 帳號（請輸入 @Handle）</label>
+                <input type="text" id="handle" placeholder="例：@your_instagram_id">
             </div>
 
-            <h2 id="question-title" class="day-title">載入中...</h2>
-
-            <div id="options-container" class="options-group">
-                <!-- 選項動態渲染 -->
+            <div class="form-group">
+                <label>2. 你的商業賽道 / 角色定位</label>
+                <input type="text" id="niche" placeholder="例：健身教練 / 保健品經銷 / 美甲師 / 團購創作者">
             </div>
+
+            <div class="form-group">
+                <label>3. 目前粉絲人數</label>
+                <select id="followers">
+                    <option value="low">🌱 低於 1,000 人（起步破圈期）</option>
+                    <option value="mid">🌿 1,000 - 5,000 人（信任累積期）</option>
+                    <option value="high">🚀 5,000 人以上（高效率變現期）</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>4. 目前帳號基礎建設（可多選）</label>
+                <div class="checkbox-group">
+                    <label class="checkbox-label"><input type="checkbox" id="check_bio"> 個人檔案（Bio）有寫清楚『我是誰/能幫你解決什麼』</label>
+                    <label class="checkbox-label"><input type="checkbox" id="check_link"> 個人檔案有放導流連結（如：Line / 預約表單 / 官網）</label>
+                    <label class="checkbox-label"><input type="checkbox" id="check_highlight"> 有設定精選限動（如：關於我、學員/客戶見證、服務流程）</label>
+                    <label class="checkbox-label"><input type="checkbox" id="check_reels"> 每週至少穩定產出 2 支以上的 Reels 短影音</label>
+                </div>
+            </div>
+
+            <button class="btn" onclick="analyzeAccount()">📊 開始帳號健檢分析</button>
         </div>
 
-        <!-- 診斷結果卡片 (預設隱藏) -->
+        <!-- 健檢結果卡片 -->
         <div id="result-card" class="card hidden">
-            <span id="result-badge" class="pill-tag pill-blue">🎯 綜合診斷定位</span>
-            <h2 id="result-type" class="day-title" style="margin-top: 8px;">分析中...</h2>
+            <span class="pill-tag pill-green">🎯 帳號健檢診斷報告</span>
+            <h2 id="result-handle" style="margin: 10px 0 4px 0; font-size: 1.25rem;"></h2>
 
-            <!-- 粉絲數與流量提醒卡 -->
-            <div id="follower-notice" class="notice-box hidden">
-                <strong>💡 剛起步流量突破點（粉絲數 < 1,000 人）：</strong>
-                <span id="follower-notice-text"></span>
+            <div class="score-box">
+                <div style="font-size: 0.85rem; color: #6b21a8; font-weight: 700;">帳號健康度綜合評分</div>
+                <div id="score-val" class="score-number">0</div>
+                <div id="score-text" style="font-size: 0.825rem; color: #581c87;"></div>
             </div>
 
             <div class="section">
-                <div class="section-title">📌 核心經營定位與邏輯</div>
-                <div id="result-desc" class="section-content"></div>
+                <div style="font-weight: 700; font-size: 0.9rem; color: #1e293b; margin-bottom: 6px;">💡 優先優化建議：</div>
+                <ul id="advice-list" style="font-size: 0.875rem; color: #475569; padding-left: 20px; margin: 0; line-height: 1.6;"></ul>
             </div>
 
-            <div class="divider"></div>
+            <hr style="border: 0; border-top: 1px solid #f1f5f9; margin: 16px 0;">
 
-            <div class="section">
-                <span class="pill-tag pill-amber">⚖️ 建議內容發佈比例 (每週策略)</span>
-                <div class="strategy-grid" id="strategy-ratio">
-                    <!-- 配比顯示 -->
-                </div>
-            </div>
+            <span class="pill-tag pill-pink">🤖 貼給 AI 的專屬深度健檢 Prompt</span>
+            <p style="font-size: 0.8rem; color: #64748b; margin-top: 6px;">點擊下方複製，直接貼給 ChatGPT / Gemini，讓 AI 幫你寫 10 支短影音腳本：</p>
 
-            <div class="divider"></div>
+            <div id="prompt-output" class="prompt-box"></div>
 
-            <div class="section">
-                <span class="pill-tag pill-soft-blue">🎬 精準短影音腳本構造（黃金 Hook + CTA）</span>
-                <p style="font-size: 0.825rem; color: #64748b; margin-top: 6px;">可以直接照著這個結構寫腳本拍片：</p>
-                <div id="result-scripts">
-                    <!-- 動態腳本注入 -->
-                </div>
-            </div>
-
-            <div class="divider"></div>
-
-            <div class="section">
-                <span class="pill-tag pill-green">🚀 第一階段行動清單（前 30 天）</span>
-                <div id="result-action" class="section-content" style="font-weight: 600;"></div>
-            </div>
-
-            <button class="action-btn" onclick="restartQuiz()">🔄 重新進行診斷</button>
+            <button class="btn" onclick="copyPrompt()">📋 一鍵複製 AI 健檢 Prompt</button>
+            <button class="btn btn-secondary" onclick="resetForm()">🔄 重新健檢其他帳號</button>
         </div>
 
     </div>
 
     <script>
-        const questions = [
-            {
-                title: "1. 你目前的帳號粉絲數/追蹤人數落在哪個區間？",
-                options: [
-                    { text: "🌱 低於 1,000 人（剛起步 / 籌備中）", key: "follower", val: "low" },
-                    { text: "🌿 1,000 - 5,000 人（累積中但轉換率不高）", key: "follower", val: "mid" },
-                    { text: "🚀 5,000 人以上（已有基礎，需要優化變現）", key: "follower", val: "high" }
-                ]
-            },
-            {
-                title: "2. 你最主要的產品或服務形式是什麼？",
-                options: [
-                    { text: "🏋️‍♂️ 高單價服務 / 1對1諮詢 / 教練課 / 線上課程", key: "product", val: "service" },
-                    { text: "💊 保健品 / 直銷優質商品 / 實體保養品", key: "product", val: "goods" },
-                    { text: "🏪 實體門市 / 地域性服務（如美甲、餐飲、健身房）", key: "product", val: "local" },
-                    { text: "📱 尚未確定產品，想先積累個人 IP / 流量接業配", key: "product", val: "traffic" }
-                ]
-            },
-            {
-                title: "3. 顧客買單時，最決定性的關鍵是什麼？",
-                options: [
-                    { text: "對我個人的專業度與信任感（認人不認牌）", key: "trigger", val: "trust" },
-                    { text: "產品的效果、CP 值與體驗感（認效果與評價）", key: "trigger", val: "effect" },
-                    { text: "我個人的生活風格、審美或價值觀（認風格）", key: "trigger", val: "lifestyle" }
-                ]
-            },
-            {
-                title: "4. 你個人在鏡頭前的出鏡與分享意願？",
-                options: [
-                    { text: "完全沒問題！喜歡對著鏡頭講話、展現個性", key: "style", val: "face_expressive" },
-                    { text: "可以露臉，但只想講乾貨與專業，不想公開私生活", key: "style", val: "face_professional" },
-                    { text: "盡量不露臉（偏好產品實拍、畫面配音、字卡呈現）", key: "style", val: "no_face" }
-                ]
-            },
-            {
-                title: "5. 你希望觀眾看完影片後，做出什麼下一步行動？",
-                options: [
-                    { text: "私訊我領取資料 / 預約免費 1對1 諮詢", key: "cta", val: "dm_lead" },
-                    { text: "點擊連結購買產品 / 填寫訂購單", key: "cta", val: "buy_direct" },
-                    { text: "追蹤我的帳號 / 留言討論互動", key: "cta", val: "follow_comment" }
-                ]
-            },
-            {
-                title: "6. 你每週能投入在短影音產出的時間？",
-                options: [
-                    { text: "⏱️ 時間有限（每週不到 3 小時，希望高效）", key: "capacity", val: "low" },
-                    { text: "🎬 時間充裕（每週可投入 5 小時以上，能穩定產出）", key: "capacity", val: "high" }
-                ]
+        function analyzeAccount() {
+            const handle = document.getElementById('handle').value || '@your_account';
+            const niche = document.getElementById('niche').value || '個人品牌';
+            const followers = document.getElementById('followers').value;
+
+            const cBio = document.getElementById('check_bio').checked;
+            const cLink = document.getElementById('check_link').checked;
+            const cHighlight = document.getElementById('check_highlight').checked;
+            const cReels = document.getElementById('check_reels').checked;
+
+            // 計算分數
+            let score = 40; // 基礎分
+            if (cBio) score += 15;
+            if (cLink) score += 15;
+            if (cHighlight) score += 15;
+            if (cReels) score += 15;
+
+            // 建議產出
+            let advice = [];
+            if (!cBio) advice.push("<b>優化 Bio：</b>個人簡介第一行請明確寫出『我能幫你解決什麼問題』，不要只寫星座或幽默短句。");
+            if (!cLink) advice.push("<b>建立導流點：</b>個人檔案缺乏外部連結，會浪費流量！請設定 Line 官方帳號或預約表單。");
+            if (!cHighlight) advice.push("<b>補強精選限動：</b>建議建立『關於我』與『學員/客戶見證』精選，新粉進來才能快速建立信任。");
+            if (!cReels) advice.push("<b>提高短影音頻率：</b>演算法目前偏好 Reels，建議每週穩定發佈 2-3 支【破解迷思型】短影片。");
+
+            if (advice.length === 0) {
+                advice.push("<b>表現極佳！</b>帳號基礎建置完整，接下來請專注於優化影片前 3 秒的 Hook（黃金開頭）以提昇轉換率。");
             }
-        ];
 
-        let currentStep = 0;
-        let userAnswers = {};
+            document.getElementById('result-handle').innerText = `帳號：${handle}（${niche}）`;
+            document.getElementById('score-val').innerText = `${score} / 100`;
+            
+            let scoreComment = "";
+            if (score < 60) scoreComment = "⚠️ 基礎建置尚未完整，流量進來容易流失";
+            else if (score < 85) scoreComment = "📈 基礎良好，調整內容結構即可快速變現";
+            else scoreComment = "🔥 帳號結構相當健康，適合加大投流或高頻發片";
 
-        document.addEventListener('DOMContentLoaded', () => {
-            renderQuestion();
-        });
+            document.getElementById('score-text').innerText = scoreComment;
 
-        function renderQuestion() {
-            const q = questions[currentStep];
-            const total = questions.length;
-
-            document.getElementById('step-tag').innerText = `步驟 ${currentStep + 1} / ${total}`;
-            document.getElementById('progress-text').innerText = `${Math.round(((currentStep + 1) / total) * 100)}%`;
-            document.getElementById('question-title').innerText = q.title;
-
-            const container = document.getElementById('options-container');
-            container.innerHTML = '';
-
-            q.options.forEach(opt => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                btn.innerText = opt.text;
-                btn.onclick = () => handleSelect(opt.key, opt.val);
-                container.appendChild(btn);
+            const adviceUl = document.getElementById('advice-list');
+            adviceUl.innerHTML = '';
+            advice.forEach(item => {
+                const li = document.createElement('li');
+                li.innerHTML = item;
+                adviceUl.appendChild(li);
             });
-        }
 
-        function handleSelect(key, val) {
-            userAnswers[key] = val;
-            currentStep++;
+            // Prompt 產生
+            const promptText = `你是一位 IG 帳號營運與短影音內容行銷專家。請幫我對 IG 帳號【${handle}】進行深度內容規劃。
 
-            if (currentStep < questions.length) {
-                renderQuestion();
-            } else {
-                showResult();
-            }
-        }
+【帳號基本背景】
+- 賽道/身份：${niche}
+- 目前粉絲規模：${followers === 'low' ? '低於 1,000 人（起步期）' : '1,000-5,000人'}
+- 目前健檢評分：${score}分
+- 待優化項目：${advice.map(a => a.replace(/<[^>]+>/g, '')).join('; ')}
 
-        function showResult() {
-            document.getElementById('quiz-card').classList.add('hidden');
+【請幫我產出】
+1. 一段適合修改到 IG 個人檔案（Bio）的 3 行黃金介紹文案（含明確 CTA）。
+2. 5 支專為【${niche}】設計的 30 秒 Reels 腳本（需包含 Hook 開頭、Value 內容與 CTA 結尾）。`;
+
+            document.getElementById('prompt-output').innerText = promptText;
+
+            document.getElementById('form-card').classList.add('hidden');
             document.getElementById('result-card').classList.remove('hidden');
-
-            const isLowFollower = userAnswers.follower === 'low';
-            const followerNotice = document.getElementById('follower-notice');
-            const followerText = document.getElementById('follower-notice-text');
-
-            if (isLowFollower) {
-                followerNotice.classList.remove('hidden');
-                followerText.innerText = "目前粉絲數未滿 1,000 人時，演算法給予的基礎推流較有限。建議前 30 天重點放在【打破認知迷思】與【痛點共鳴】的流量型/共鳴型影片，不要太早做硬銷，先把精準人群吸引進來！";
-            } else {
-                followerNotice.classList.add('hidden');
-            }
-
-            let typeName = "";
-            let typeDesc = "";
-            let ratioHTML = "";
-            let scripts = [];
-            let actionText = "";
-
-            // 邏輯判定
-            if (userAnswers.product === 'service' || userAnswers.trigger === 'trust') {
-                typeName = "🎯 專業信任型 IP（適合：教練課 / 諮詢 / 高單價服務）";
-                typeDesc = "你的商業核心是「高信任、高價值」。不需要幾萬大流量，只要吸引有明確痛點的客戶。影片必須展示你的『專業洞見』與『解決問題的能力』，而不是一直推銷課程本身。";
-                
-                ratioHTML = `
-                    <div class="strategy-item"><strong>🔥 50% 痛點迷思破除</strong>吸引潛在客戶關注</div>
-                    <div class="strategy-item"><strong>💡 30% 乾貨與案例</strong>展示解決方案與實證</div>
-                    <div class="strategy-item"><strong>🤝 20% 強導流 CTA</strong>引導私訊或預約諮詢</div>
-                `;
-
-                scripts = [
-                    {
-                        title: "腳本 1：迷思破解型（ Hook + Value ）",
-                        text: "<b>【Hook 開頭】</b>：『如果你減肥一直在算卡路里，難怪你總是反覆復胖！』<br><b>【中間內容】</b>：說明為什麼單純算卡路里會失敗（點出 2 個死角），給出正確的做法。<br><b>【CTA 結尾】</b>：『私訊我【減重】，免費領取這週的代謝檢測表。』"
-                    },
-                    {
-                        title: "腳本 2：學員案例拆解型（ 建立強信任 ）",
-                        text: "<b>【Hook 開頭】</b>：『一個每天加班到 10 點的工程師，是怎麼在 60 天內降 5% 體脂的？』<br><b>【中間內容】</b>：拆解學員遇到的最大阻礙（沒時間、外食），展示客製化的調整策略。<br><b>【CTA 結尾】</b>：『想知道適合你的外食減脂菜單嗎？留言【菜單】我發給你。』"
-                    }
-                ];
-
-                actionText = "佈局私域導流機制：確定你的導流贈品（如：PDF 檢測表/15分鐘免費諮詢），並在每支影片結尾統一引導私訊。";
-
-            } else if (userAnswers.product === 'goods' || userAnswers.trigger === 'effect') {
-                typeName = "🛍️ 產品情境轉化型（適合：保健品 / 直銷商品 / 實體產品）";
-                typeDesc = "觀眾不在乎保健品成分有多複雜，觀眾在乎的是『這東西能不能解決我現在的痛苦』。採用『情境帶入 + 使用前後對比/體驗』是最高效的轉化方式。";
-
-                ratioHTML = `
-                    <div class="strategy-item"><strong>🎬 60% 痛點情境體驗</strong>呈現生活場景與困擾</div>
-                    <div class="strategy-item"><strong>🔬 20% 開箱/小白科普</strong>用白話文講產品優勢</div>
-                    <div class="strategy-item"><strong>🛒 20% 優惠與開箱引導</strong>促進下單或詢問</div>
-                `;
-
-                scripts = [
-                    {
-                        title: "腳本 1：痛點共鳴與開箱（ 情境帶入 ）",
-                        text: "<b>【Hook 開頭】</b>：『每天下午 3 點開會就頭昏腦脹？這是我試過最有感的精神救星...』<br><b>【中間內容】</b>：展示上班族昏昏欲睡的場景，拿出產品並分享使用後的真實改變（用白話文描述優勢）。<br><b>【CTA 結尾】</b>：『首頁連結有優惠，或是私訊我了解更多！』"
-                    },
-                    {
-                        title: "腳本 2：小白闢謠（ 建立權威與產品優勢 ）",
-                        text: "<b>【Hook 開頭】</b>：『市面上保健品那麼多，怎麼挑才不會花冤枉錢？教你 3 秒看懂！』<br><b>【中間內容】</b>：教觀眾看成分標示的 2 個小技巧，順勢引出自家產品為什麼符合最高標準。<br><b>【CTA 結尾】</b>：『想看詳細規格？私訊我發檢驗報告給你。』"
-                    }
-                ];
-
-                actionText = "準備 3 個核心生活痛點場景（例如：熬夜疲勞、順暢維持、外食營養），分別錄製情境開頭（Hook），進行 A/B 測試。";
-
-            } else if (userAnswers.product === 'local') {
-                typeName = "📍 地域同城流量型（適合：實體門市 / 店面服務 / 區域商家）";
-                typeDesc = "實體門市需要的是「在地精準流量」。影片重點在於展現店內體驗、服務細節與「讓觀眾有理由專程跑一趟」。";
-
-                ratioHTML = `
-                    <div class="strategy-item"><strong>🏪 50% 店內體驗與沉浸開箱</strong>展現視覺感與服務</div>
-                    <div class="strategy-item"><strong>💬 30% 客戶真實評價/避坑</strong>增強踩點意願</div>
-                    <div class="strategy-item"><strong>🎁 20% 店頭限定優惠/引導</strong>到店核銷或預約</div>
-                `;
-
-                scripts = [
-                    {
-                        title: "腳本 1：沉浸式服務體驗",
-                        text: "<b>【Hook 開頭】</b>：『在地人都不一定知道！這家藏在巷弄裡的XX店...』<br><b>【中間內容】</b>：用第一人稱鏡頭帶領觀眾到店體驗、展示環境與服務細節。<br><b>【CTA 結尾】</b>：『出示這支影片，到店免費換取小禮物！地點在首頁資訊。』"
-                    }
-                ];
-
-                actionText = "設定【到店專屬優惠】，並在影片中明確告示店家位置與地標資訊。";
-
-            } else {
-                typeName = "🔥 個人 IP 流量人設型（適合：自媒體創作者 / 接業配 / 品牌代言）";
-                typeDesc = "你的核心賣點是「個人風格與觀點」。透過強烈的金句、日常反差感與情感共鳴，快速吸引大量粉絲關注。";
-
-                ratioHTML = `
-                    <div class="strategy-item"><strong>🔥 70% 觀點碰撞/熱點跟風</strong>博取最大曝光</div>
-                    <div class="strategy-item"><strong>✨ 20% 個人生活 Vlog/反差</strong>建立深度黏著度</div>
-                    <div class="strategy-item"><strong>📩 10% 商業合作展示</strong>商業化變現</div>
-                `;
-
-                scripts = [
-                    {
-                        title: "腳本 1：強觀點輸出",
-                        text: "<b>【Hook 開頭】</b>：『如果你也想在 2026 年開始做自媒體，這 3 個真心話你一定要先聽！』<br><b>【中間內容】</b>：分享 3 個顛覆傳統思維的實戰觀點。<br><b>【CTA 結尾】</b>：『同意的點個贊，你最認同哪一點？留言告訴我！』"
-                    }
-                ];
-
-                actionText = "確立你的「個人性格標籤（語速、講話風格、視覺配色）」，保持穩定且高頻率的產出。";
-            }
-
-            document.getElementById('result-type').innerText = typeName;
-            document.getElementById('result-desc').innerText = typeDesc;
-            document.getElementById('strategy-ratio').innerHTML = ratioHTML;
-            document.getElementById('result-action').innerText = actionText;
-
-            const scriptsContainer = document.getElementById('result-scripts');
-            scriptsContainer.innerHTML = '';
-            scripts.forEach(sc => {
-                const div = document.createElement('div');
-                div.className = 'script-card';
-                div.innerHTML = `<strong>${sc.title}</strong><p>${sc.text}</p>`;
-                scriptsContainer.appendChild(div);
-            });
-
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function restartQuiz() {
-            currentStep = 0;
-            userAnswers = {};
-            document.getElementById('quiz-card').classList.remove('hidden');
+        function copyPrompt() {
+            const promptText = document.getElementById('prompt-output').innerText;
+            navigator.clipboard.writeText(promptText).then(() => {
+                alert('複製成功！現在可以打開 ChatGPT 或 Gemini 貼上使用了。');
+            });
+        }
+
+        function resetForm() {
+            document.getElementById('form-card').classList.remove('hidden');
             document.getElementById('result-card').classList.add('hidden');
-            renderQuestion();
         }
     </script>
 </body>
